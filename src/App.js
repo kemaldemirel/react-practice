@@ -1,35 +1,32 @@
-import React, {useState} from 'react';
-import PostForm from './components/PostForm';
-import PostList from './components/PostList';
+import { useState } from 'react'
 
-import './styles/App.css';
+import { Form } from './components/Post/Form'
+import { List } from './components/Post/List'
 
-function App() {
+import './styles/App.css'
+
+export const App = () => {
   const [posts, setPosts] = useState([
-    {id: 1, title: 'JavaScript', body: 'JavaScript the best'},
-    {id: 2, title: 'JavaScript 2', body: 'JavaScript the best'},
-    {id: 3, title: 'Java', body: 'JavaScript the best'},
-    {id: 3, title: 'JavaScript 3', body: 'JavaScript the best'}
+    { id: 1, title: 'JavaScript', body: 'JavaScript the best' },
+    { id: 2, title: 'JavaScript 2', body: 'JavaScript the best' },
+    { id: 3, title: 'Java', body: 'JavaScript the best' },
+    { id: 3, title: 'JavaScript 3', body: 'JavaScript the best' },
   ])
 
-  const createPost = (newPost) =>{
-    setPosts([...posts, newPost]);
-  }
+  const addPost = (post) => setPosts((posts) => posts.concat(post))
 
-  const removePost = (post) => {
-    setPosts(posts.filter(p => p.id !== post.id));
-  }
-  
+  const removePost = (post) =>
+    setPosts((posts) => posts.filter((p) => p.id !== post.id))
+
   return (
-    <div className="App">
-      <PostForm create={createPost} />
-      {posts.length !== 0
-        ? <PostList remove={removePost} posts={posts} title={'Список постов 1'}/>
-        : <h1 style={{textAlign: 'center'}}>Записей не найдено</h1>
-      }
-      
-    </div>
-  );
-}
+    <div className='App'>
+      <Form add={addPost} />
 
-export default App;
+      {posts.length !== 0 ? (
+        <List title='Список постов 1' posts={posts} remove={removePost} />
+      ) : (
+        <h1 style={{ textAlign: 'center' }}>Записей не найдено</h1>
+      )}
+    </div>
+  )
+}
